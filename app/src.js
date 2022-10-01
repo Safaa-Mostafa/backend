@@ -1,0 +1,20 @@
+require('dotenv').config()
+require('../app/database/connection')
+const cors = require('cors')
+const express = require("express")
+const app=express()
+
+const path =require("path")
+const staticDir = path.join(__dirname,"../public")
+app.use(express.static(staticDir))
+app.use(cors())
+app.use(express.urlencoded({extended:true}))
+
+app.use(express.json())
+const userRoutes = require("../routes/user.api")
+app.use("/user",userRoutes)
+const productRoutes = require("../routes/product.api")
+app.use("/products",productRoutes)
+const categoryRoutes = require("../routes/category.api")
+app.use("/category",categoryRoutes)
+module.exports =app
